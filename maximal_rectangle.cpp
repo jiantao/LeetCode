@@ -109,6 +109,11 @@ int main(int argc, char *argv[])
     int maxArea = solution.maximalRectangle(matrix);
     cout << maxArea << endl;
 
+    test.assign(1, 0);
+    maxArea = solution.maximalRectangle(matrix);
+    cout << maxArea << endl;
+
+    test.assign(2, 1);
     matrix.push_back(test);
     matrix.push_back(test);
 
