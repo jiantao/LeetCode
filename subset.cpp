@@ -6,7 +6,7 @@
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  04/06/2013 04:35:15 PM
+ *        Created:  04/10/2013 01:52:24 PM
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -23,87 +23,53 @@ using namespace std;
 class Solution 
 {
 public:
-    vector<vector<int> > subsetsWithDup(vector<int> &S) 
+    vector<vector<int> > subsets(vector<int> &S) 
     {
         results.clear();
-        preprocess(S);
+        tempResults.clear();
 
-        int size = S.size();
+        std::sort(S.begin(), S.end());
+        size = S.size();
         for (int i = 0; i <= size; ++i)
-            dfs(i, 0);
+            dfs(S, i, 0);
 
         return results;
     }
 
 private:
-
-    void preprocess(const vector<int>& S)
-    {
-        elements.clear();
-        candidates.clear();
-        cumSum.clear();
-
-        int origSize = S.size();
-        for (int i = 0; i != origSize; ++i)
-            ++(elements[S[i]]);
-
-        map<int, int>::const_iterator iter;
-        int cum = 0;
-        for (iter = elements.begin(); iter != elements.end(); ++iter)
-        {
-            candidates.push_back(Element(iter->first, iter->second));
-            cum += iter->second;
-            cumSum.push_back(cum);
-        }
-
-        elements.clear();
-    }
-
-    void dfs(int numLeft, int idx)
+    void dfs(const vector<int>& S, int numLeft, int idx)
     {
         if (numLeft == 0)
         {
-            results.push_back(tempResult);
+            results.push_back(tempResults);
             return;
         }
 
-        int remaining = cumSum.back() - cumSum[idx];
-        int numElement = candidates[idx].count;
+        int remains = size - idx - 1; 
         int pushCount = 0;
-        for (int i = 0; i <= numElement; ++i)
+        for (int i = 0; i <= 1; ++i)
         {
-            if (i > numLeft)
+            if (numLeft < i)
                 break;
-            
+
             if (i > 0)
             {
-                tempResult.push_back(candidates[idx].num);
+                tempResults.push_back(S[idx]);
                 ++pushCount;
             }
 
-            if (remaining + i < numLeft)
+            if (numLeft > remains + i)
                 continue;
 
-            dfs(numLeft - i, idx + 1);
+            dfs(S, numLeft - i, idx + 1);
         }
 
         for (int i = 0; i != pushCount; ++i)
-            tempResult.pop_back();
+            tempResults.pop_back();
     }
 
 private:
-
-    struct Element
-    {
-        int num;
-        int count;
-
-        Element(int n, int c) : num(n), count(c) {};
-    };
-
-    map<int, int> elements;
-    vector<Element> candidates;
-    vector<int> cumSum;
-    vector<int> tempResult;
+    int size;
+    vector<int> tempResults;
     vector<vector<int> > results;
 };
