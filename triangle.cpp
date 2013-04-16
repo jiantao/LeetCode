@@ -57,3 +57,29 @@ public:
         return min;
     }
 };
+
+class Solution_2
+{
+
+public: 
+    int minimumTotal(vector<vector<int> > &triangle) 
+    {
+        int size = triangle.size();
+        if (size < 2)
+            return triangle[0][0];
+
+        cumSum.assign(triangle[size-1].begin(), triangle[size-1].end());
+
+        for (int i = size - 2; i >= 0; --i)
+        {
+            int rSize = triangle[i].size();
+            for (int j = 0; j != rSize; ++j)
+                cumSum[j] = triangle[i][j] + (cumSum[j] < cumSum[j+1] ? cumSum[j] : cumSum[j+1]);
+        }
+
+        return cumSum[0];
+    }
+
+private:
+    vector<int> cumSum;
+};
