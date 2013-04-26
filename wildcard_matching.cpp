@@ -135,12 +135,45 @@ private:
     bool match;
 };
 
+class Solution2
+{
+public:
+    bool isMatch(const char *s, const char *p) 
+    {
+        // last '*' position in p
+        const char* star = NULL;
+
+        // last match position in s after '*' in p
+        const char* ss = NULL;
+
+        while (*s != '\0')
+        {
+            // if there is a match in s and p move one char in both string
+            if ((*p == *s) || (*p == '?')) {++s; ++p; continue;}
+            // if there is a '*' in p store the star position in p and match position in s
+            if (*p == '*') {ss = s; star = p++; continue;}
+            // if there is a mismatch check if there is a '*' appeared before
+            // if there is, rematch the substr from the last '*' with ss + 1
+            if (star != NULL) {s = ++ss; p = star + 1; continue;}
+
+            return false;
+        }
+
+        // if all left chars in p is '*'
+        // then it is a match
+        while (*p == '*')
+                ++p;
+
+        return (*p == '\0');
+    }
+};
+
 int main(int argc, char *argv[])
 {
-    string a = "a";
-    string b = "*?*?";
+    string a = "aab";
+    string b = "*?*a";
 
-    Solution solution;
+    Solution2 solution;
     if (solution.isMatch(a.c_str(), b.c_str()))
     {
         printf("match\n");
