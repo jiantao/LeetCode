@@ -65,8 +65,22 @@ private:
             match = true;
             return;
         }
-        else if (is == sLen || ip == pLen)
+        else if (ip == pLen)
             return;
+        else if (is == sLen)
+        {
+            int i = ip;
+            while (i != pLen)
+            {
+                if (target[i] != '*')
+                    return;
+
+                ++i;
+            }
+
+            match = true;
+            return;
+        }
         
         switch (target[ip])
         {
@@ -120,3 +134,17 @@ private:
 
     bool match;
 };
+
+int main(int argc, char *argv[])
+{
+    string a = "a";
+    string b = "*?*?";
+
+    Solution solution;
+    if (solution.isMatch(a.c_str(), b.c_str()))
+    {
+        printf("match\n");
+    }
+
+    return 0;
+}
