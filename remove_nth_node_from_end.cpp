@@ -33,24 +33,33 @@ class Solution
 public:
     ListNode *removeNthFromEnd(ListNode *head, int n) 
     {
-        helper.clear();
-        ListNode* iter = head;
-        while (iter != NULL)
+        ListNode* iter1 = head;
+        ListNode* iter2 = head;
+        int k = n;
+        while (iter2 != NULL && k > 0)
         {
-            helper.push_back(iter);
-            iter = iter->next;
+            iter2 = iter2->next;
+            --k;
         }
 
-        int idx = helper.size() - n;
+        ListNode* prev = NULL;
+        while (iter2 != NULL)
+        {
+            if (prev != NULL)
+                prev = prev->next;
+            else
+                prev = head;
+
+            iter1 = iter1->next;
+            iter2 = iter2->next;
+        }
+
         ListNode* newHead = head;
-        if (idx != 0)
-            helper[idx-1]->next = helper[idx]->next;
+        if (prev != NULL)
+            prev->next = iter1->next;
         else
-            newHead = helper[idx]->next;
+            newHead = iter1->next;
 
         return newHead;
     }
-
-private:
-    vector<ListNode*> helper;
 };
