@@ -24,6 +24,7 @@
 #include <vector>
 #include <map>
 #include <deque>
+#include <queue>
 #include <list>
 #include <set>
 #include <cstdlib>
