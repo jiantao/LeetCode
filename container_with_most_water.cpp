@@ -25,18 +25,19 @@ class Solution
 public:
     int maxArea(vector<int> &height) 
     {
-        stack.clear();
-        int maxArea = 0;
-        int size = height.size();
-
-        stack.push_back(0);
-        for (int i = 1 ; i < size; ++i)
+        int area = 0;
+        int start = 0;
+        int end = height.size() - 1;
+        while (start < end)
         {
-            int topIdx = stack.back();
-            if (height[i] > height[topIdx])
+            int h = height[start] < height[end] ? height[start] : height[end];
+            area = max(area, h * (end - start));
+            if (h == height[start])
+                ++start;
+            else 
+                --end;
         }
-    }
 
-private:
-    vector<int> stack;
+        return area;
+    }
 };
