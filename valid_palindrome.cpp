@@ -48,10 +48,42 @@ public:
     }
 };
 
+class Solution2
+{
+public:
+    bool isPalindrome(string s) 
+    {
+        int len = s.length();
+        int left = 0;
+        int right = len - 1;
+
+        while (left <= right)
+        {
+            char lChar = tolower(s[left]);
+            char rChar = tolower(s[right]);
+
+            if ((lChar < 'a' || lChar > 'z') && (lChar < '0' || lChar > '9'))
+                ++left;
+            else if ((rChar < 'a' || rChar > 'z') && (rChar < '0' || rChar > '9'))
+                --right;
+            else
+            {
+                if (lChar != rChar)
+                    return false;
+
+                ++left;
+                --right;
+            }
+        }
+
+        return true;
+    }
+};
+
 int main(int argc, char *argv[])
 {
-    string test("ab2a");
-    Solution solution;
+    string test("a, ba");
+    Solution2 solution;
     if (solution.isPalindrome(test))
         printf("Is a valid palindrome.\n");
     else

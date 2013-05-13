@@ -95,3 +95,35 @@ public:
         return sum;
     }
 };
+
+class Solution2
+{
+public:
+    int sumNumbers(TreeNode *root) 
+    {
+        sum = 0;
+
+        preOrder(root, 0);
+
+        return sum;
+    }
+
+private:
+    void preOrder(TreeNode* root, int currSum)
+    {
+        if (root == NULL)
+            return;
+
+        currSum = currSum * 10 + root->val;
+        if (root->left == NULL && root->right == NULL)
+            sum += currSum;
+        else
+        {
+            preOrder(root->left, currSum);
+            preOrder(root->right, currSum);
+        }
+    }
+
+private:
+    int sum;
+};

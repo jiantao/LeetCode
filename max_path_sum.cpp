@@ -75,3 +75,48 @@ public:
 private:
     int maxSum;
 };
+
+class SolutionDup
+{
+public:
+
+    int maxPathSum(TreeNode *root) 
+    {
+        maxSum = INT_MIN;
+        postOrder(root);
+
+        return maxSum;
+    }
+
+    int postOrder(TreeNode* root)
+    {
+        if (root == NULL)
+            return 0;
+
+        int leftSum = postOrder(root->left);
+        int rightSum = postOrder(root->right);
+
+        int currMax = root->val;
+        if (leftSum > 0)
+            currMax += leftSum;
+        
+        if (rightSum > 0)
+            currMax += rightSum;
+
+        if (currMax > maxSum)
+            maxSum = currMax;
+
+        if (leftSum < 0 && rightSum < 0)
+            return currMax;
+        else
+        {
+            if (leftSum > rightSum)
+                return (root->val + leftSum);
+            else
+                return (root->val + rightSum);
+        }
+    }
+
+private:
+    int maxSum;
+};
