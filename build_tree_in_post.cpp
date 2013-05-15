@@ -71,3 +71,71 @@ private:
 private:
     unordered_map<int, int> inorderMap;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class SolutionDup
+{
+public:
+    TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder) 
+    {
+        inorderMap.clear();
+        int n = inorder.size();
+
+        for (int i = 0 ; i != n; ++i)
+            inorderMap[inorder[i]] = i;
+
+        return doBuildTree(inorder, 0, n - 1, postorder, 0, n - 1);
+    }
+
+private:
+
+    TreeNode* doBuildTree(vector<int>& inorder, int inStart, int inEnd, vector<int>& postorder, int postStart, int postEnd)
+    {
+        if (inStart > inEnd)
+            return NULL;
+
+        int rootVal = postorder[postEnd];
+        TreeNode* root = new TreeNode(rootVal);
+
+        int idx = inorderMap[rootVal];
+
+        int leftPostEnd = postStart + idx - inStart - 1;
+        TreeNode* leftTree = doBuildTree(inorder, inStart, idx - 1, postorder, postStart, leftPostEnd);
+        TreeNode* rightTree = doBuildTree(inorder, idx + 1, inEnd, postorder, leftPostEnd + 1, postEnd - 1);
+
+        root->left = leftTree;
+        root->right = rightTree;
+
+        return root;
+    }
+
+private:
+    unordered_map<int, int> inorderMap;
+};
