@@ -60,13 +60,50 @@ private:
     vector<vector<int>> result;
 };
 
+class Solution2
+{
+public:
+    vector<vector<int> > permute(vector<int> &num) 
+    {
+        result.clear();
+        n = num.size();
+
+        compute(num, 0);
+        return result;
+    }
+
+private:
+
+    void compute(vector<int>& num, int idx)
+    {
+        if (idx == n)
+        {
+            result.push_back(num);
+            return;
+        }
+
+        for (int i = idx; i != n; ++i)
+        {
+            swap(num[i], num[idx]);
+            compute(num, idx + 1);
+            swap(num[i], num[idx]);
+        }
+    }
+
+private:
+
+    int n;
+    vector<int> temp;
+    vector<vector<int>> result;
+};
+
 int main(int argc, char *argv[])
 {
     vector<int> num;
     for (int i = 0; i != 4; ++i)
         num.push_back(i + 1);
 
-    Solution solution;
+    Solution2 solution;
     vector<vector<int>> result = solution.permute(num);
 
     for (unsigned i = 0; i != result.size(); ++i)

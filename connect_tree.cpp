@@ -87,3 +87,66 @@ public:
         }
     }
 };
+
+class SolutionDup
+{
+public:
+
+    void connect(TreeLinkNode *root) 
+    {
+        if (root == NULL)
+            return;
+
+        root->next = NULL;
+        TreeLinkNode* prev = root;
+        TreeLinkNode* curr = NULL;
+
+        while (prev != NULL)
+        {
+            TreeLinkNode* prevIter = prev;
+            TreeLinkNode* currIter = NULL;
+
+            while (prevIter != NULL)
+            {
+                TreeLinkNode* left = prevIter->left;
+                TreeLinkNode* right = prevIter->right;
+                if (left != NULL)
+                {
+                    if (currIter != NULL)
+                    {
+                        currIter->next = left;
+                        currIter = left;
+                    }
+                    else
+                    {
+                        currIter = left;
+                        curr = currIter;
+                    }
+
+                    currIter->next = NULL;
+                }
+
+                if (right != NULL)
+                {
+                    if (currIter != NULL)
+                    {
+                        currIter->next = right;
+                        currIter = right;
+                    }
+                    else
+                    {
+                        currIter = right;
+                        curr = currIter;
+                    }
+
+                    currIter->next = NULL;
+                }
+
+                prevIter = prevIter->next;
+            }
+
+            prev = curr;
+            curr = NULL;
+        }
+    }
+};
