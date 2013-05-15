@@ -66,6 +66,55 @@ private:
     unordered_map<int, int> uniqMap;
 };
 
+class SolutionDup
+{
+public:
+    vector<vector<int> > permuteUnique(vector<int> &num) 
+    {
+        result.clear();
+        uniqMap.clear();
+        n = num.size();
+        if (n == 0)
+            return result;
+
+        temp.resize(n);
+        for (int i = 0; i != n; ++i)
+            ++uniqMap[num[i]];
+
+        generatePermutation(0);
+        return result;
+    }
+
+private:
+    void generatePermutation(int idx)
+    {
+        if (idx == n)
+        {
+            result.push_back(temp);
+            return;
+        }
+
+        unordered_map<int, int>::iterator iter;
+        for (iter = uniqMap.begin(); iter != uniqMap.end(); ++iter)
+        {
+            if (iter->second > 0)
+            {
+                temp[idx] = iter->first;
+                --(iter->second);
+                generatePermutation(idx + 1);
+                ++(iter->second);
+            }
+        }
+    }
+
+private:
+
+    int n;
+    unordered_map<int, int> uniqMap;
+    vector<vector<int>> result;
+    vector<int> temp;
+};
+
 int main(int argc, char *argv[])
 {
     vector<int> num;
@@ -76,7 +125,7 @@ int main(int argc, char *argv[])
     num[1] = 2;
 
 
-    Solution solution;
+    SolutionDup solution;
     vector<vector<int>> result = solution.permuteUnique(num);
 
     for (unsigned i = 0; i != result.size(); ++i)
