@@ -75,12 +75,68 @@ private:
     vector<vector<int>> result;
 };
 
+class SolutionDup
+{
+public:
+    vector<vector<int>> threeSum(vector<int> &num) 
+    {
+        result.clear();
+        int size = num.size();
+        if (size == 0)
+            return result;
+
+        sort(num.begin(), num.end());
+
+        int prevOne = num[0] - 1;
+        for (int i = 0; i <= size - 3; ++i)
+        {
+            if (prevOne == num[i])
+                continue;
+
+            int last = size - 1;
+            int prevTwo = num[0] - 1;
+            for (int j = i + 1; j <= size - 2; ++j)
+            {
+                if (prevTwo == num[j])
+                    continue;
+
+                while (last > j)
+                {
+                    int sum = num[i] + num[j] + num[last];
+                    if (sum < 0)
+                        break;
+                    else if (sum == 0)
+                    {
+                        int temp[] = {num[i], num[j], num[last]};
+                        result.push_back(vector<int>(temp, temp + 3));
+                        break;
+                    }
+
+                    --last;
+                }
+
+                if (last == j)
+                    break;
+
+                prevTwo = num[j];
+            }
+
+            prevOne = num[i];
+        }
+
+        return result;
+    }
+
+private:
+    
+    vector<vector<int>> result;
+};
 
 int main(int argc, char *argv[])
 {
-    int t[] = {-1, 1, 0, -2, 2, -5, 8, -3};
-    vector<int> test(t, t + 0);
-    Solution solution;
+    int t[] = {-2, 0, 0, 2, 2};
+    vector<int> test(t, t + 5);
+    SolutionDup solution;
     
     vector<vector<int>> result = solution.threeSum(test);
 
