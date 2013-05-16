@@ -93,7 +93,6 @@ private:
 private:
 
     int n;
-    vector<int> temp;
     vector<vector<int>> result;
 };
 
