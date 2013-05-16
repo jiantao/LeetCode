@@ -20,37 +20,24 @@
 
 using namespace std;
 
-class Solution 
+class Solution
 {
 public:
     int maxSubArray(int A[], int n) 
     {
         int max = INT_MIN;
-
         int currSum = 0;
-        int maxSum = 0;
 
         for (int i = 0; i != n; ++i)
         {
-            if (max < A[i])
-                max = A[i];
-        }
-
-        if (max <= 0)
-            return max;
-
-        for (int i = 0 ; i != n; ++i)
-        {
             currSum += A[i];
-            if (currSum > 0)
-            {
-                if (currSum > maxSum)
-                    maxSum = currSum;
-            }
-            else
+            if (currSum > max)
+                max = currSum;
+
+            if (currSum < 0)
                 currSum = 0;
         }
 
-        return maxSum;
+        return max;
     }
 };
