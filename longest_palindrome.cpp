@@ -53,10 +53,11 @@ public:
 class Solution2
 {
 public:
-    int longestPalindrome(const string& str)
+    string longestPalindrome(const string& str)
     {
         int len = str.length();
         int longest = 0;
+        int start = 0;
 
         for (int i = 0; i != len; ++i)
         {
@@ -64,16 +65,23 @@ public:
             int right = i;
             expandAroundCenter(str, left, right);
             if (right - left + 1 > longest)
+            {
                 longest = right - left + 1;
+                start = left;
+            }
 
             left = i;
             right = i + 1;
             expandAroundCenter(str, left, right);
             if (right - left + 1 > longest)
+            {
                 longest = right - left + 1;
+                start = left;
+            }
         }
 
-        return longest;
+        string result = str.substr(start, longest);
+        return result;
     }
     
 private:
