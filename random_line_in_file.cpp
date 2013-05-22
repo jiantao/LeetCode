@@ -46,3 +46,35 @@ private:
     static const int MAX_LINE = 1024;
     char buff[MAX_LINE];
 };
+
+class Solution2
+{
+public:
+    vector<string> kRandLines(const char* filename, int k)
+    {
+        ifstream input;
+        input.open(filename);
+
+        vector<string> result(k);
+
+        int i = 0;
+        while (input.good() && i <= k)
+        {
+            getline(input, result[i]);
+            ++i;
+        }
+
+        string buff;
+        while (input.good())
+        {
+            getline(input, buff);
+            int random = rand() % i;
+            if (random < k)
+                result[random] = buff;
+
+            ++i;
+        }
+
+        return result;
+    }
+};

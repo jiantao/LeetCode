@@ -30,20 +30,20 @@ public:
     int randomOnWeight(vector<int>& nums)
     {
         int sum = 0;
-        int random = 0;
         int size = nums.size();
 
         for (int i = 0; i != size; ++i)
             sum += nums[i];
 
-        // generate a number between 0 to sum - 1
-        random = rand() % sum;
+        double randNum = (double) rand() / RAND_MAX * sum;
+        for (int i = 0; i != size; ++i)
+        {
+            randNum -= nums[i];
+            if (randNum < 0)
+                return nums[i];
+        }
 
-        int idx;
-        for (idx = 0; idx != size && random >= 0; ++idx)
-            random -= nums[idx];
-
-        return idx;
+        return -1;
     }
 };
 

@@ -19,6 +19,7 @@
 #define  HEADER_HPP
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <cstring>
 #include <vector>
