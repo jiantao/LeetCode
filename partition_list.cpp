@@ -78,3 +78,49 @@ public:
         return ret;
     }
 };
+
+// put the numbers smaller than x into one list
+// and put the numbers equal to or larger than x into another list
+// merge these two lists at the end
+class Solution2
+{
+public:
+    ListNode *partition(ListNode *head, int x) 
+    {
+        ListNode* smallStart = NULL;
+        ListNode* smallEnd = NULL;
+        ListNode* bigStart = NULL;
+        ListNode* bigEnd = NULL;
+
+        for (ListNode* iter = head; iter != NULL; iter = iter->next)
+        {
+            if (iter->val < x)
+            {
+                if (smallStart == NULL)
+                    smallStart = iter;
+                else
+                    smallEnd->next = iter;
+
+                smallEnd = iter;
+            }
+            else
+            {
+                if (bigStart == NULL)
+                    bigStart = iter;
+                else
+                    bigEnd->next = iter;
+
+                bigEnd = iter;
+            }
+        }
+
+        if (smallStart == NULL)
+            return bigStart;
+
+        smallEnd->next = bigStart;
+        if (bigEnd != NULL && bigEnd->next != NULL)
+            bigEnd->next = NULL;
+
+        return smallStart;
+    }
+};
