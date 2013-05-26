@@ -69,3 +69,39 @@ public:
         return head;
     }
 };
+
+class SolutionDup 
+{
+public:
+    ListNode *mergeKLists(vector<ListNode *> &lists) 
+    {
+        priority_queue<ListNode*, vector<ListNode*>, CompareListNode> nodeQue;
+
+        for (unsigned i = 0; i != lists.size(); ++i)
+        {
+            if (lists[i] != NULL)
+                nodeQue.push(lists[i]);
+        }
+
+        ListNode* newHeader = NULL;
+        ListNode* newIter = NULL;
+
+        while (!nodeQue.empty())
+        {
+            ListNode* currNode = nodeQue.top();
+            if (newHeader == NULL)
+                newHeader = currNode;
+            else
+                newIter->next = currNode;
+
+            newIter = currNode;
+
+            nodeQue.pop();
+
+            if (currNode->next != NULL)
+                nodeQue.push(currNode->next);
+        }
+
+        return newHeader;
+    }
+};

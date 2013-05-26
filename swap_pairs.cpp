@@ -101,3 +101,33 @@ public:
         end = temp;
     }
 };
+
+class Solution2
+{
+public:
+    ListNode *swapPairs(ListNode *head) 
+    { 
+        ListNode* newHead = head;
+        ListNode* iter = head;
+        ListNode* prev = NULL;
+
+        while (iter != NULL && iter->next != NULL)
+        {
+            ListNode* first = iter->next;
+            ListNode* after = first->next;
+
+            first->next = iter;
+            iter->next = after;
+
+            if (prev == NULL)
+                newHead = first;
+            else
+                prev->next = first;
+
+            prev = iter;
+            iter = iter->next;
+        }
+
+        return newHead;
+    }
+};

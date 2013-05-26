@@ -86,3 +86,24 @@ private:
         return ret;
     }
 };
+
+class Solution2
+{
+public:
+    ListNode *deleteDuplicates(ListNode *head) 
+    {
+        ListNode* iter = head;
+
+        while (iter != NULL)
+        {
+            ListNode* start = iter;
+            while (iter->next != NULL && iter->val == iter->next->val)
+                iter = iter->next;
+
+            start->next = iter->next;
+            iter = iter->next;
+        }
+
+        return head;
+    }
+};
