@@ -115,6 +115,47 @@ private:
     vector<int> temp;
 };
 
+class Solution2
+{
+public:
+    vector<vector<int> > permuteUnique(vector<int> &num) 
+    {
+        result.clear();
+        n = num.size();
+        generate(num, 0);
+
+        return result;
+    }
+
+private:
+
+    void generate(vector<int>& num, int idx)
+    {
+        if (idx == n)
+        {
+            result.push_back(num);
+            return;
+        }
+
+        set<int> hash;
+        for (int i = idx; i != n; ++i)
+        {
+            if (hash.find(num[i]) == hash.end())
+            {
+                hash.insert(num[i]);
+                swap(num[i], num[idx]);
+                generate(num, idx+1);
+                swap(num[i], num[idx]);
+            }
+        }
+    }
+
+private:
+    
+    int n;
+    vector<vector<int>> result;
+};
+
 int main(int argc, char *argv[])
 {
     vector<int> num;

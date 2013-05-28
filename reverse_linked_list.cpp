@@ -79,3 +79,60 @@ private:
     ListNode* prev;
     ListNode* next;
 };
+
+class Solution2
+{
+public:
+    ListNode *reverseBetween(ListNode *head, int m, int n) 
+    {
+        int count = 1;
+        ListNode* begin = head;
+        ListNode* prev = NULL;
+
+        while (count != m)
+        {
+            ++count;
+            prev = begin;
+            begin = begin->next;
+        }
+
+        ListNode* end = begin;
+        while (count != n)
+        {
+            ++count;
+            end = end->next;
+        }
+
+        ListNode* after = end->next;
+
+        reverse(begin, end);
+
+        ListNode* newHead = head;
+        if (prev == NULL)
+            newHead = begin;
+        else
+            prev->next = begin;
+
+        end->next = after;
+
+        return newHead;
+    }
+
+private:
+    void reverse(ListNode*& begin, ListNode*& end)
+    {
+        ListNode* newBegin = end;
+        ListNode* iter = begin;
+
+        while (iter != end)
+        {
+            ListNode* next = iter->next;
+            iter->next = newBegin->next;
+            newBegin->next = iter;
+            iter = next;
+        }
+
+        end = begin;
+        begin = newBegin;
+    }
+};

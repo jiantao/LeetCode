@@ -57,6 +57,43 @@ public:
     }
 };
 
+class Solution2
+{
+public:
+    void rotate(vector<vector<int> > &matrix) 
+    { 
+        int row = 0;
+        int col = 0;
+        int size = matrix.size();
+        int end = size - 1;
+
+        while (col < end)
+        {
+            for (int i = col; i != end; ++i)
+            {
+                int newRow = row;
+                int newCol = i;
+                int fromVal = matrix[newRow][newCol];
+
+                for (int j = 0; j != 4; ++j)
+                {
+                    int temp = newRow;
+                    newRow = newCol;
+                    newCol = size - 1 - temp;
+
+                    int toVal = matrix[newRow][newCol];
+                    matrix[newRow][newCol] = fromVal;
+                    fromVal = toVal;
+                }
+            }
+
+            row += 1;
+            col += 1;
+            end -= 1;
+        }
+    }
+};
+
 int main(int argc, char *argv[])
 {
     vector<vector<int>> matrix;

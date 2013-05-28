@@ -69,6 +69,47 @@ private:
     vector<string> result;
 };
 
+class Solution2
+{
+public:
+    vector<string> generateParenthesis(int n) 
+    {
+        result.clear();
+        if (n == 0)
+            return result;
+
+        temp.resize(2 * n);
+        doGenerate(0, 0, n);
+        return result;
+    }
+
+private:
+    void doGenerate(int left, int right, int n)
+    {
+        if (left == n && right == n)
+        {
+            result.push_back(temp);
+            return;
+        }
+
+        if (left != n)
+        {
+            temp[left + right] = '(';
+            doGenerate(left+1, right, n);
+        }
+
+        if (left > right)
+        {
+            temp[left+right] = ')';
+            doGenerate(left, right+1, n);
+        }
+    }
+
+private:
+    vector<string> result;
+    string temp;
+};
+
 int main(int argc, char *argv[])
 {
     Solution solution;

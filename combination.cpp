@@ -68,3 +68,41 @@ private:
     vector<int> tempResult;
     vector<vector<int> > results;
 };
+
+class Solution2
+{
+public:
+    vector<vector<int> > combine(int n, int k) 
+    {
+        temp.resize(k);
+        result.clear();
+        goal = k;
+        total = n;
+
+        doCombine(0, 1);
+
+        return result;
+    }
+
+private:
+    void doCombine(int idx, int start)
+    {
+        if (idx == goal)
+        {
+            result.push_back(temp);
+            return;
+        }
+
+        for (int i = start; i <= total; ++i)
+        {
+            temp[idx] = i;
+            doCombine(idx + 1, i + 1);
+        }
+    }
+
+private:
+    int total;
+    int goal;
+    vector<int> temp;
+    vector<vector<int>> result;
+};

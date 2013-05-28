@@ -45,7 +45,6 @@ public:
             iter = wordInfo.find(S[i]);
             if (iter != wordInfo.end())
             {
-                int prevLeft = numLeft;
                 if (iter->second > 0)
                     --numLeft;
 
